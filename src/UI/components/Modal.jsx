@@ -4,8 +4,8 @@ export const Modal = (props) => {
   return (
     <div
       className={`${
-        show ? "fixed" : "hidden"
-      }   left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 max-w-2xl w-10/12 sm:w-8/12 md:w-1/2`}
+        show ? "fixed z-40 bg-white" : "hidden"
+      }   left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2  w-10/12 sm:w-8/12 md:w-1/2`}
     >
       <button
         className="absolute right-5 top-4 bg-burgundy text-xs text-white px-1 rounded"
