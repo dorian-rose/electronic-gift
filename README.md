@@ -1,8 +1,3 @@
-# React + Vite
+# electronic-gift
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A commissioned project: Generate a QR that leads to a page with an electronic gift, e.g. ticket, voucher, that can be downloaded by recipient. Leave a message with the gift and print QR to give to recipient.
