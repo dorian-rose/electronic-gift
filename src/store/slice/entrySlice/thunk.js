@@ -33,7 +33,7 @@ export const getEntries = (url, method, body) => {
             //        }
             //     }
             // }
-            console.log("at fetch ")
+            console.log("at fetch ", url, method)
             const response = await fetch(url, options);
             data = await response.json();
             console.log("ok", data.ok, "entries", data.data, "msg", data.msg)

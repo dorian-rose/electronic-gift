@@ -1,6 +1,18 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export const GiftCard = (entry) => {
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    if (entry.images && entry.images.length > 0) {
+      const imageUrl = entry.images[0].url;
+      setUrl(imageUrl);
+    } else {
+      setUrl("#");
+    }
+  }, []);
+
   return (
     <article className="relative justify-center bg-tertiary m-2  pb-12  shadow">
       <h2 className="h-8 overflow-hidden tracking-widest text-lg text-primary capitalize">
@@ -13,7 +25,8 @@ export const GiftCard = (entry) => {
       >
         {entry.message}
       </p>
-      <img className="w-full" src={entry.image} alt={entry.title} />
+      <img className="w-full" src={url} alt={entry.title} />
+      <iframe src={entry.file} frameBorder="0" />
       <Link to={`view/${entry._id}`} className="block shadow w-fit mx-auto">
         View
       </Link>

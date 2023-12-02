@@ -15,7 +15,7 @@ export const dataFetch = async (url, method, body) => {
     const newData = { ...body } //from body
     console.log("in fetch", newData)
     try {
-        if (method == "DELETE") {
+        if (method == "DELETE" || method == "POST" || method == "PUT") {
 
             options = {
                 method: method,
@@ -26,17 +26,7 @@ export const dataFetch = async (url, method, body) => {
                 }
             }
         }
-        if (method == "POST" || method == "PUT") {
 
-            options = {
-                method: method,
-                body: body,//JSON.stringify(newData),
-                // headers: {
-                //     //"Content-type": "application/json",
-                //     "Content-type": "multipart/form-data",
-                // }
-            }
-        }
 
         const response = await fetch(url, options);
 

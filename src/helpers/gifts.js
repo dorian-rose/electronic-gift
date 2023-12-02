@@ -16,7 +16,7 @@ export const gifts = () => {
     };
 
 
-    const create = async (data, uid) => {
+    const create = async (data) => {
         console.log("in create", data)
         const url = import.meta.env.VITE_URL;
         const method = "POST";

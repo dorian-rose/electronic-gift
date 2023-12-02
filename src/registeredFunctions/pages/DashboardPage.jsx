@@ -7,7 +7,7 @@ import { GiftCard } from "../components/GiftCard";
 
 export const DashboardPage = () => {
   const [showModal, setShowModal] = useState(false);
-  const [updateState, setUpdateState] = useState(false);
+
   const dispatch = useDispatch();
   const uid = "12345abcde";
 
@@ -20,13 +20,13 @@ export const DashboardPage = () => {
   const url = `${import.meta.env.VITE_URL}/user/${uid}`;
   const method = "GET";
 
+  //function to open or close modal
+  const openCloseModal = () => setShowModal(!showModal);
+
   //dispatch to fetch
   useEffect(() => {
     dispatch(getEntries(url, method));
-  }, [updateState]);
-
-  //function to open or close modal
-  const openCloseModal = () => setShowModal(!showModal);
+  }, []);
 
   return (
     <div>
