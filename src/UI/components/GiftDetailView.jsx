@@ -4,6 +4,7 @@ import { gifts } from "../../helpers/gifts";
 import { useState } from "react";
 import { Modal } from "./Modal";
 import { CreateEditForm } from "../../registeredFunctions/components/CreateEditForm";
+import { DownloadFile } from "./DownloadFile";
 
 export const GiftDetailView = (entry) => {
   const [showModal, setShowModal] = useState(false);
@@ -36,7 +37,20 @@ export const GiftDetailView = (entry) => {
         >
           {entry.message}
         </p>
-        <div>
+        <div className="flex">
+          {entry.images && entry.images.length > 0 ? (
+            entry.images.map((image, index) => (
+              <div key={image.public_id}>
+                <img
+                  // Use a unique key for each element in the array
+                  src={image.url}
+                  alt={`Image ${index + 1}`} // Use a descriptive alt text
+                />
+              </div>
+            ))
+          ) : (
+            <p>No images available.</p>
+          )}
           <img className="w-full" src={entry.image} alt={entry.title} />
         </div>
 
@@ -62,16 +76,8 @@ export const GiftDetailView = (entry) => {
             </button>
           </div>
         </footer>
-        <button
-          // onClick={onUpdate}
-          className={
-            location.pathname == `/gift/${entry._id}`
-              ? "mx-4 text-primary text-xl py-1 px-3 shadow-xl rounded-full border "
-              : "hidden"
-          }
-        >
-          Download
-        </button>
+
+        <DownloadFile url={entry.file} />
       </article>
       <Modal
         show={showModal}

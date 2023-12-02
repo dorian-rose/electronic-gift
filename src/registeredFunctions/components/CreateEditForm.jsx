@@ -1,10 +1,14 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getEntries } from "../../store/slice/entrySlice/thunk";
 import { gifts } from "../../helpers/gifts";
 
 export const CreateEditForm = ({ close, gift }) => {
+  const [images, setImages] = useState([]);
+  const [formattedFile, setFormattedFile] = useState("");
+  const [isLoading, setIsloading] = useState(false);
   const { create, update, obtain } = gifts();
   const navigate = useNavigate();
   const uid = "12345abcde";
@@ -20,93 +24,153 @@ export const CreateEditForm = ({ close, gift }) => {
     control,
     formState: { errors },
   } = useForm();
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "imagesArray",
-  });
+  // const { fields, append, remove } = useFieldArray({
+  //   control,
+  //   name: "imagesArray",
+  // });
 
-  const onSubmit = (data) => {
-    const { title, message, imagesArray } = data;
-    console.log("data", data);
-    const images = imagesArray.map((obj) => obj.file[0]);
-    console.log(images);
-
-    //update, gift already exists
-    if (gift) {
-      update(gift, data);
-    } else {
-      //new gift
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("messsage", message);
-      formData.append("images", images);
-      // formData.append("image", image[0]);
-      formData.append("uid", uid);
-      formData.append("password", "1234Abcd");
-      console.log(formData);
-      create(formData, uid);
-    }
-    obtain(uid);
-    reset();
-    navigate("/");
-    close();
+  //handle images  array
+  const handleImage = (e) => {
+    const files = Array.from(e.target.files);
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImages((oldArray) => [...oldArray, reader.result]);
+      };
+    });
   };
+
+  // const handlePDF = (file) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file[0]);
+  //   reader.onloadend = () => {
+  //     setFormattedFile(reader.result);
+  //   };
+  // };
+
+  const handlePDF = async (file) => {
+    try {
+      return await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file[0]);
+        reader.onloadend = () => {
+          setFormattedFile(reader.result);
+          resolve(reader.result);
+        };
+        reader.onerror = (error) => {
+          reject(error);
+        };
+      });
+    } catch (error) {
+      console.error("An error occurred:", error);
+      throw error;
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      if (data.file) {
+        data.file = await handlePDF(data.file);
+      }
+
+      //update, gift already exists
+      if (gift) {
+        update(gift, data);
+      } else {
+        //new gift
+        const body = { ...data, images, uid, password: "11234546" };
+        console.log("body", body);
+
+        setIsloading(true);
+        await create(body);
+        setIsloading(false);
+      }
+      setImages([]);
+      reset();
+      obtain(uid);
+      close();
+    } catch (error) {
+      console.log("An error occurred:", error);
+    }
+  };
+  //on submit form send to api
+  // const onSubmit = async (data) => {
+  //   if (data.file) {
+  //     await handlePDF(data.file);
+  //   }
+  //   data.file = formattedFile;
+
+  //   //update, gift already exists
+  //   if (gift) {
+  //     update(gift, data);
+  //   } else {
+  //     //new gift
+  //     const body = { ...data, images, uid, password: "11234546" };
+  //     console.log("body", body);
+  //     return;
+  //     setIsloading(true);
+  //     await create(body);
+  //     setIsloading(false);
+  //   }
+  //   setImages([]);
+  //   reset();
+  //   obtain(uid);
+  //   close();
+  // };
   return (
-    <form
-      className="rounded-3xl p-2  w-full"
-      onSubmit={handleSubmit((data) => onSubmit(data))}
-    >
-      <input
-        {...register("title", { required: "Título es requerido" })}
-        type="text"
-        defaultValue={gift ? gift.title : ""}
-        placeholder={gift ? "" : "Ponle un título al regalo"}
-        // className="font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
-        className={`
+    <>
+      <form
+        className="rounded-3xl p-2  w-full"
+        onSubmit={handleSubmit((data) => onSubmit(data))}
+      >
+        <input
+          {...register("title", { required: "Título es requerido" })}
+          type="text"
+          defaultValue={gift ? gift.title : ""}
+          placeholder={gift ? "" : "Ponle un título al regalo"}
+          // className="font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
+          className={`
           "shadow-inner font-light pt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary",
           ${errors.title && "focus:border-alert border-alert bg-red-100"}
         `}
-      />
-      <p className="font-thin italic text-alert px-20 text-sm">
-        {errors.title?.message}
-      </p>
-      <textarea
-        {...register("message")}
-        defaultValue={gift ? gift.message : ""}
-        placeholder="Escríbe un mensaje para el recipiente del regalo"
-        className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
-      />
-      {/* <input
-        {...register("image")}
-        type="file"
-        accept="jpg"
-        multiple
-        className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
-      /> */}
-      <div>
-        <label>Image Upload</label>
-        {fields.map((field, index) => (
-          <div key={field.id}>
-            <input
-              type="file"
-              {...register(`imagesArray.${index}.file`)}
-              accept="image/*"
-            />
-            <button type="button" onClick={() => remove(index)}>
-              Remove
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={() => append({ file: null })}>
-          Add Image
+        />
+        <p className="font-thin italic text-alert px-20 text-sm">
+          {errors.title?.message}
+        </p>
+        <textarea
+          {...register("message")}
+          defaultValue={gift ? gift.message : ""}
+          placeholder="Escríbe un mensaje para el recipiente del regalo"
+          className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
+        />
+        <input
+          onChange={handleImage}
+          type="file"
+          name="image"
+          multiple
+          className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
+        />
+        <input
+          type="file"
+          {...register("file", { required: "Archivo es requerido" })}
+          className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
+        />
+
+        <button
+          className="mt-8 w-10/12 m-auto block bg-primary text-tertiary shadow-md rounded-3xl px-4 py-2 focus:outline-none focus:border-primary hover:text-secondary hover:bg-tertiary hover:border hover:border-1  hover:border-secondary"
+          type="submit"
+        >
+          {gift ? "Actualizar" : "Crear"}
         </button>
-      </div>
-      <button
-        className="mt-8 w-10/12 m-auto block bg-primary text-tertiary shadow-md rounded-3xl px-4 py-2 focus:outline-none focus:border-primary hover:text-secondary hover:bg-tertiary hover:border hover:border-1  hover:border-secondary"
-        type="submit"
-      >
-        {gift ? "Actualizar" : "Crear"}
-      </button>
-    </form>
+        {isLoading && (
+          <img
+            className="h-20 m-auto block mt-4"
+            src="https://i.gifer.com/ZKZg.gif"
+            alt="loading gif"
+          />
+        )}
+      </form>
+    </>
   );
 };
