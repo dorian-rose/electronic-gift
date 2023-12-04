@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import SimpleImageSlider from "react-simple-image-slider";
 
 export const GiftCard = (entry) => {
-  const [url, setUrl] = useState("");
+  //const [url, setUrl] = useState("");
+  //const [images, setImages] = useState([]);
 
-  useEffect(() => {
-    if (entry.images && entry.images.length > 0) {
-      const imageUrl = entry.images[0].url;
-      setUrl(imageUrl);
-    } else {
-      setUrl("#");
-    }
-  }, []);
+  const images = entry.images.map(({ url }) => url);
+  // setImages[imageArray];
 
+  //useEffect(() => {
+
+  // if (entry.images && entry.images.length > 0) {
+  //   const imageUrl = entry.images[0].url;
+  //   setUrl(imageUrl);
+  // } else {
+  //   setUrl("#");
+  // }
+  //}, []);
+  console.log(images);
   return (
     <article className="relative justify-center bg-tertiary m-2  pb-12  shadow">
       <h2 className="h-8 overflow-hidden tracking-widest text-lg text-primary capitalize">
@@ -25,7 +31,17 @@ export const GiftCard = (entry) => {
       >
         {entry.message}
       </p>
-      <img className="w-full" src={url} alt={entry.title} />
+      <div>
+        <div>
+          <SimpleImageSlider
+            width={250}
+            height={150}
+            images={images}
+            showBullets={true}
+            showNavs={true}
+          />
+        </div>
+      </div>
       <iframe src={entry.file} frameBorder="0" />
       <Link to={`view/${entry._id}`} className="block shadow w-fit mx-auto">
         View

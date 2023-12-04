@@ -14,7 +14,6 @@ export const GiftPage = () => {
 
   return (
     <div>
-      <p>{entries?.msg}</p>
       <GiftDetailView {...entries.data} />
     </div>
   );
