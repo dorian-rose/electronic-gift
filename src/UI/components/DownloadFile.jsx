@@ -27,7 +27,7 @@ export const DownloadFile = (file) => {
   return (
     <div>
       <button
-        className="mx-4 text-primary text-xl py-1 px-3 shadow-xl rounded-full border "
+        className="relative left-1/2 -translate-x-1/2 text-primary text-xl py-1 px-3 shadow-xl rounded-full border "
         onClick={handleDownload}
       >
         Download PDF

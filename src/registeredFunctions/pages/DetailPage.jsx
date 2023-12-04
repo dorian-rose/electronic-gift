@@ -16,7 +16,6 @@ export const DetailPage = () => {
   console.log("entries on page", entries, id);
   return (
     <div>
-      <p>{entries?.msg}</p>
       <GiftDetailView {...entries.data} />
     </div>
   );
