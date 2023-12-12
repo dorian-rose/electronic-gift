@@ -4,7 +4,7 @@ import { jsPDF } from "jspdf";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export const CreateQR = ({ id, setID }) => {
+export const CreateQR = ({ id, setID, msg }) => {
   const [loading, setLoading] = useState(false);
 
   const downloadQr = () => {
@@ -40,16 +40,20 @@ export const CreateQR = ({ id, setID }) => {
       </button>
 
       <article className="bg-tertiary  m-2 border border-primary shadow-lg rounded-xl z-20 pb-4  ">
-        <h2 className=" mt-7 mb-4 text-primary text-lg text-center sm:text-xl">
-          Nuevo regalo creado con éxito!
-        </h2>
+        {msg && (
+          <h2 className=" mt-7 mb-4 text-primary text-lg text-center sm:text-xl">
+            Nuevo regalo creado con éxito!
+          </h2>
+        )}
         <div className="flex justify-center mb-6">
-          <Link
-            to={`view/${id}`}
-            className="text-primary bg-white m-2 text-xl py-1 px-3 shadow-xl rounded-full border "
-          >
-            Ver detalles
-          </Link>
+          {msg && (
+            <Link
+              to={`view/${id}`}
+              className="text-primary bg-white m-2 text-xl py-1 px-3 shadow-xl rounded-full border "
+            >
+              Ver detalles
+            </Link>
+          )}
           <button
             onClick={downloadQr}
             className="text-primary bg-white m-2 text-xl py-1 px-3 shadow-xl rounded-full border "

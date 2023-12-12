@@ -1,4 +1,9 @@
-import { MdDelete, MdOutlineEditNote, MdOutlineUndo } from "react-icons/md";
+import {
+  MdDelete,
+  MdOutlineEditNote,
+  MdOutlineUndo,
+  MdOutlineQrCode2,
+} from "react-icons/md";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { gifts } from "../../helpers/gifts";
 import { useState } from "react";
@@ -7,9 +12,11 @@ import { CreateEditForm } from "../../registeredFunctions/components/CreateEditF
 import { DownloadFile } from "./DownloadFile";
 import { Slider } from "./Slider";
 import { PdfComp } from "./PdfComp";
+import { CreateQR } from "../../registeredFunctions/components/CreateQR";
 
 export const GiftDetailView = (entry) => {
   const [showModal, setShowModal] = useState(false);
+  const [newEntryId, setNewEntryId] = useState(null);
   const [showPdf, setShowPdf] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,8 +64,7 @@ export const GiftDetailView = (entry) => {
             className="relative left-1/2 -translate-x-1/2 text-primary my-3 text-xl py-1 px-3 shadow-xl rounded-full border "
             onClick={changeDisplayPdf}
           >
-            {location.pathname ==
-            `https://teregalo.netlify.app/view/${entry._id}`
+            {location.pathname == `/view/${entry._id}`
               ? "Ver PDF"
               : "Revelar tu regalo..."}
           </button>
@@ -77,8 +83,7 @@ export const GiftDetailView = (entry) => {
         <footer className="   w-full">
           <div
             className={
-              location.pathname ==
-              `https://teregalo.netlify.app/view/${entry._id}`
+              location.pathname == `/view/${entry._id}`
                 ? "flex justify-center shadow px-3 py-1  rounded relative left-1/2 -translate-x-1/2"
                 : "hidden"
             }
@@ -94,6 +99,12 @@ export const GiftDetailView = (entry) => {
               className="mx-4 text-red-700 text-xl p-1 shadow-xl rounded-full border "
             >
               <MdDelete />
+            </button>{" "}
+            <button
+              onClick={() => setNewEntryId(entry._id)}
+              className="mx-4 text-primary text-xl p-1 shadow-xl rounded-full border "
+            >
+              <MdOutlineQrCode2 />
             </button>
             <Link
               to="/"
@@ -104,6 +115,9 @@ export const GiftDetailView = (entry) => {
           </div>
         </footer>
       </section>
+      {newEntryId && (
+        <CreateQR id={newEntryId} setID={setNewEntryId} msg={false} />
+      )}
       <Modal
         show={showModal}
         close={openCloseModal}
