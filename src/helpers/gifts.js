@@ -17,12 +17,13 @@ export const gifts = () => {
 
 
     const create = async (data) => {
-        console.log("in create", data)
+
         const url = import.meta.env.VITE_URL;
         const method = "POST";
         // const body = { ...data, uid, password: "1234Abcd" };
-        await dataFetch(url, method, data);
-
+        const newEntry = await dataFetch(url, method, data);
+        console.log("new entry", newEntry, "id", newEntry._id)
+        return newEntry.data._id
     };
 
     const remove = async (id) => {

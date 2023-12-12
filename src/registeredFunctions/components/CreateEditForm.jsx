@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getEntries } from "../../store/slice/entrySlice/thunk";
 import { gifts } from "../../helpers/gifts";
 
-export const CreateEditForm = ({ close, gift }) => {
+export const CreateEditForm = ({ close, gift, setID }) => {
   const [images, setImages] = useState([]);
   const [formattedFile, setFormattedFile] = useState("");
   const [isLoading, setIsloading] = useState(false);
@@ -80,44 +80,23 @@ export const CreateEditForm = ({ close, gift }) => {
       } else {
         //new gift
         const body = { ...data, images, uid, password: "11234546" };
-        console.log("body", body);
 
         setIsloading(true);
-        await create(body);
+        const newId = await create(body);
         setIsloading(false);
+        console.log("new id", newId);
+        setID(newId);
       }
       setImages([]);
       reset();
       obtain(uid);
+
       close();
     } catch (error) {
       console.log("An error occurred:", error);
     }
   };
-  //on submit form send to api
-  // const onSubmit = async (data) => {
-  //   if (data.file) {
-  //     await handlePDF(data.file);
-  //   }
-  //   data.file = formattedFile;
 
-  //   //update, gift already exists
-  //   if (gift) {
-  //     update(gift, data);
-  //   } else {
-  //     //new gift
-  //     const body = { ...data, images, uid, password: "11234546" };
-  //     console.log("body", body);
-  //     return;
-  //     setIsloading(true);
-  //     await create(body);
-  //     setIsloading(false);
-  //   }
-  //   setImages([]);
-  //   reset();
-  //   obtain(uid);
-  //   close();
-  // };
   return (
     <>
       <form

@@ -4,9 +4,11 @@ import { Modal } from "../../UI/components/Modal";
 import { CreateEditForm } from "../components/CreateEditForm";
 import { getEntries } from "../../store/slice/entrySlice/thunk";
 import { GiftCard } from "../components/GiftCard";
+import { CreateQR } from "../components/CreateQR";
 
 export const DashboardPage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [newEntryId, setNewEntryId] = useState(null);
 
   const dispatch = useDispatch();
   const uid = "12345abcde";
@@ -30,17 +32,22 @@ export const DashboardPage = () => {
 
   return (
     <div>
-      DashboardPage
-      <button className="block shadow w-fit mx-auto" onClick={openCloseModal}>
+      <button
+        className="m-auto block w-fit text-primary my-4 text-xl py-1 px-3 shadow-xl rounded-full border"
+        onClick={openCloseModal}
+      >
         Crear
       </button>
       <Modal
         show={showModal}
         close={openCloseModal}
         title={"Crear regalo"}
-        children={<CreateEditForm close={openCloseModal} />}
+        children={
+          <CreateEditForm close={openCloseModal} setID={setNewEntryId} />
+        }
       />
-      <section className="mx-6 my-3 sm:my-6 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3  lg:grid-cols-4">
+      {newEntryId && <CreateQR id={newEntryId} setID={setNewEntryId} />}
+      <section className="mx-6 my-3 sm:my-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4">
         {isLoading ? (
           <img
             className="h-20"

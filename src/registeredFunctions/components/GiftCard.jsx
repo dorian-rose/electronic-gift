@@ -1,79 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SimpleImageSlider from "react-simple-image-slider";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { Slider } from "../../UI/components/Slider";
 
 export const GiftCard = (entry) => {
-  //const [url, setUrl] = useState("");
-  //const [images, setImages] = useState([]);
-
-  const images = entry.images.map(({ url }) => url);
-  // setImages[imageArray];
-
-  //useEffect(() => {
-
-  // if (entry.images && entry.images.length > 0) {
-  //   const imageUrl = entry.images[0].url;
-  //   setUrl(imageUrl);
-  // } else {
-  //   setUrl("#");
-  // }
-  //}, []);
-  console.log(images);
   return (
-    <article className="relative justify-center bg-tertiary m-2  pb-12  shadow">
-      <h2 className="h-8 overflow-hidden tracking-widest text-lg text-primary capitalize">
+    <article className="relative justify-center bg-slate-50 mx-4 max-w-xs shadow m-auto mb-3 sm:mb-0">
+      <h2 className="text-center py-2 underline tracking-widest text-2xl text-primary capitalize">
         {entry.title}
       </h2>
 
-      <p
-        // onClick={onOpen}
-        className="h-14  overflow-hidden text-ellipsis whitespace-nowrap px-4 py-2"
-      >
-        {entry.message}
-      </p>
+      <p className="text-center pb-2">{entry.message}</p>
       <div>
-        <div>
-          <SimpleImageSlider
-            width={250}
-            height={150}
-            images={images}
-            showBullets={true}
-            showNavs={true}
-          />
+        <div className="w-3/4 m-auto">
+          <Slider imagesArray={entry.images} />
         </div>
       </div>
-      <iframe src={entry.file} frameBorder="0" />
-      <Link to={`view/${entry._id}`} className="block shadow w-fit mx-auto">
-        View
-      </Link>
 
-      {/* <footer className="flex justify-between my-4 absolute bottom-0 left-1/2 -translate-x-1/2 w-full">
-        <div onClick={onComplete}>
-          {task.completed ? (
-            <button className="mx-4 text-green-500 text-xl p-1 shadow-xl rounded-full border ">
-              <MdCheckCircle />
-            </button>
-          ) : (
-            <button className="mx-4 text-green-500 text-xl p-1 shadow-xl rounded-full border ">
-              <MdOutlineCircle />
-            </button>
-          )}
-        </div>
-        <div className="flex justify-around">
-          <button
-            onClick={onUpdate}
-            className="mx-4 text-primary text-xl p-1 shadow-xl rounded-full border "
-          >
-            <MdOutlineEditNote />
-          </button>
-          <button
-            onClick={onDelete}
-            className="mx-4 text-alert text-xl p-1 shadow-xl rounded-full border "
-          >
-            <MdDelete />
-          </button>
-        </div>
-      </footer> */}
+      <Link
+        to={`view/${entry._id}`}
+        className="m-auto block w-fit text-primary my-4 text-xl py-1 px-3 shadow-xl rounded-full border"
+      >
+        <FaMagnifyingGlass />
+      </Link>
     </article>
   );
 };

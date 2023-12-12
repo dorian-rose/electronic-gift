@@ -21,7 +21,7 @@ export const Slider = ({ imagesArray }) => {
   };
 
   return (
-    <article className="bg-slate-100 py-1 relative">
+    <article className="bg-slate-100  py-1 relative">
       <div className="overflow-hidden relative m-8 ">
         <div
           className="flex transition ease-out duration-40  "
