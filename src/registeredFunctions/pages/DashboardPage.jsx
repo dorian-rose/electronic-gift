@@ -46,7 +46,9 @@ export const DashboardPage = () => {
           <CreateEditForm close={openCloseModal} setID={setNewEntryId} />
         }
       />
-      {newEntryId && <CreateQR id={newEntryId} setID={setNewEntryId} />}
+      {newEntryId && (
+        <CreateQR id={newEntryId} setID={setNewEntryId} msg={true} />
+      )}
       <section className="mx-6 my-3 sm:my-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4">
         {isLoading ? (
           <img
