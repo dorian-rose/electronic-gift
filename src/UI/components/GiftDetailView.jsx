@@ -29,7 +29,7 @@ export const GiftDetailView = (entry) => {
 
   return (
     <>
-      <section className="relative justify-center bg-tertiary  m-4  pb-20 min-h-screen  shadow-2xl">
+      <section className="justify-center bg-tertiary  m-4  pb-20  shadow-2xl">
         <h1 className="text-center pb-5 pt-10 underline tracking-widest text-2xl text-primary capitalize">
           {entry.title}
         </h1>
@@ -37,14 +37,14 @@ export const GiftDetailView = (entry) => {
         <div className="flex flex-col sm:flex-row ">
           {entry.images && entry.images.length > 0 ? (
             // first grid
-            <div className="w-full  sm:p-4  m-auto ">
+            <div className="flex-1  sm:p-4  m-auto ">
               <Slider imagesArray={entry.images} />
             </div>
           ) : (
             <p>No images available.</p>
           )}
           {/* second grid box */}
-          <article className="w-full  sm:p-4">
+          <article className="w-full flex-1 sm:p-4">
             <div className="bg-slate-50 w-full h-full px-2  pb-5 sm:pb-0">
               <div className="relative top-1/2 sm:-translate-y-1/2 left-1/2 -translate-x-1/2  bg-white rounded-xl w-fit p-3">
                 <p className=" text-center">{entry.message}</p>
