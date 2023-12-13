@@ -12,6 +12,7 @@ export const GiftPage = () => {
   //fetch entry with id from params
   const { isLoading, entries } = useFetch(url, method);
 
+  //add isloading
   return (
     <div>
       <GiftDetailView {...entries.data} />
