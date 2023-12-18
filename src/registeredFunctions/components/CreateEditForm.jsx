@@ -7,6 +7,7 @@ import { gifts } from "../../helpers/gifts";
 
 export const CreateEditForm = ({ close, gift, setID }) => {
   const [images, setImages] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
   const [formattedFile, setFormattedFile] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const { create, update, obtain } = gifts();
@@ -15,7 +16,6 @@ export const CreateEditForm = ({ close, gift, setID }) => {
   //collect user id
   const { uid } = useSelector((state) => state.user);
 
-  
   //react hook form
   const {
     register,
@@ -29,9 +29,16 @@ export const CreateEditForm = ({ close, gift, setID }) => {
   //   name: "imagesArray",
   // });
 
+  const resetImages = () => {
+    setImageNames([]);
+    setImages([]);
+  };
+
   //handle images  array
   const handleImage = (e) => {
+    setImageNames((oldArray) => [...oldArray, e.target.files[0].name]);
     const files = Array.from(e.target.files);
+    console.log("img", files);
     files.forEach((file) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -110,7 +117,7 @@ export const CreateEditForm = ({ close, gift, setID }) => {
           placeholder={gift ? "" : "Ponle un título al regalo"}
           // className="font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
           className={`
-          "shadow-inner font-light pt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary",
+          "shadow-inner  font-light mb-6 pt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary",
           ${errors.title && "focus:border-alert border-alert bg-red-100"}
         `}
         />
@@ -123,17 +130,45 @@ export const CreateEditForm = ({ close, gift, setID }) => {
           placeholder="Escríbe un mensaje para el recipiente del regalo"
           className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
         />
+        <label
+          htmlFor="image"
+          className="relative top-5  left-12   bg-white px-2 text-gray-500 text-sm"
+        >
+          Sube fotos
+        </label>
         <input
           onChange={handleImage}
           type="file"
           name="image"
           multiple
-          className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
+          className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-3 focus:outline-none focus:border-primary "
         />
+        <p>
+          {imageNames.length > 0 && (
+            <div className="flex flex-wrap justify-center content-center">
+              {imageNames.map((imageName) => (
+                <p className="me-2 self-center text-xs">{imageName}</p>
+              ))}
+
+              <button
+                className="text-red-500 self-center shadow border px-1"
+                onClick={resetImages}
+              >
+                x
+              </button>
+            </div>
+          )}
+        </p>
+        <label
+          htmlFor="file"
+          className="relative top-5  left-12   bg-white px-2 text-gray-500 text-sm"
+        >
+          Adjunta un archivo PDF
+        </label>
         <input
           type="file"
           {...register("file", { required: "Archivo es requerido" })}
-          className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-2 focus:outline-none focus:border-primary "
+          className="shadow-inner font-light mt-2 w-10/12 m-auto block border border-1 rounded-3xl px-4 py-3 focus:outline-none focus:border-primary "
         />
 
         <button
