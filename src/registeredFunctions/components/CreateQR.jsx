@@ -1,12 +1,12 @@
 import QRCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export const CreateQR = ({ id, setID, msg }) => {
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const downloadQr = () => {
     setLoading(true);
     const qrCodeElement = document.getElementById("qr-code");
@@ -30,6 +30,11 @@ export const CreateQR = ({ id, setID, msg }) => {
     setLoading(false);
   };
 
+  const goToDetails = () => {
+    navigate(`view/${id}`);
+    setID(null);
+  };
+
   return (
     <div className="fixed z-40 bg-slate-100 rounded-xl left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2  w-10/12 sm:w-8/12">
       <button
@@ -47,12 +52,12 @@ export const CreateQR = ({ id, setID, msg }) => {
         )}
         <div className="flex justify-center mb-6">
           {msg && (
-            <Link
-              to={`view/${id}`}
+            <button
+              onClick={goToDetails}
               className="text-primary bg-white m-2 text-xl py-1 px-3 shadow-xl rounded-full border "
             >
               Ver detalles
-            </Link>
+            </button>
           )}
           <button
             onClick={downloadQr}

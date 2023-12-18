@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import giftGive from "../../assets/giftGive.jpg";
 import present from "../../assets/present.jpg";
 
@@ -18,20 +19,25 @@ export const HomePage = () => {
         <h2 className="text-2xl font-semibold text-gray-800 my-4">
           Bienvenido a TeRegalo!
         </h2>
-        <h3 className="mb-8 font-semibold">
+        <h3 className="mb-8 mx-6 text-center font-semibold">
           Con nuestra aplicación en React, podrás crear momentos inolvidables y
           regalos especiales. ¡Descubre cómo hacerlo en solo unos pasos!
         </h3>
-        <button className="p-2 block m-auto my-2 shadow text-primary ">
+        <Link
+          to="/register"
+          className="p-2 block m-auto my-2 shadow text-primary "
+        >
           Regístrate
-        </button>
+        </Link>
         <p>
           Ya tienes cuenta?{" "}
-          <span className="text-primary hover:underline">Login</span>
+          <Link to="/login" className="text-primary hover:underline">
+            Login
+          </Link>
         </p>
       </section>
       <section className="">
-        <div className="container mx-auto bg-slate-50 p-10 shadow">
+        <div className=" w-full bg-slate-50 p-10 shadow">
           <article className="mb-8 grid  md:grid-cols-2 lg:grid-cols-4">
             <div className="mb-6 mx-3 bg-white shadow-lg rounded py-2 px-4">
               <h4 className="text-lg font-semibold text-primary mb-2">
@@ -83,9 +89,12 @@ export const HomePage = () => {
               personalizados y memorables. ¡Haz clic en "Iniciar Sesión" y
               comienza a crear momentos inolvidables hoy mismo!
             </p>
-            <button className="p-2 block m-auto my-2 shadow text-primary ">
+            <Link
+              to="/register"
+              className="p-2 block m-auto my-2 shadow text-primary "
+            >
               Iniciar sesión
-            </button>
+            </Link>
           </div>
         </div>
       </section>

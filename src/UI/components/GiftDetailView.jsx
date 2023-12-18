@@ -28,7 +28,6 @@ export const GiftDetailView = (entry) => {
   const changeDisplayPdf = () => setShowPdf(!showPdf);
 
   const onDelete = async () => {
-    console.log(entry, "id", entry._id);
     await remove(entry._id);
     obtain(entry.uid);
     navigate("/");
