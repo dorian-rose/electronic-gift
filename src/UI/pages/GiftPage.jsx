@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { GiftDetailView } from "../../UI/components/GiftDetailView";
-import { useState, useEffect } from "react";
 
 export const GiftPage = () => {
   const { id } = useParams();
@@ -11,11 +10,24 @@ export const GiftPage = () => {
   const method = "GET";
   //fetch entry with id from params
   const { isLoading, entries } = useFetch(url, method);
+ 
 
   //add isloading
   return (
     <div>
-      <GiftDetailView {...entries.data} />
+      {isLoading ? (
+        <img
+          className="h-20"
+          src="https://i.gifer.com/ZKZg.gif"
+          alt="loading gif"
+        />
+      ) : entries.ok ? (
+        <GiftDetailView {...entries.data} />
+      ) : (
+        <p className="tracking-widest text-burgundy text-base font-light my-7">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

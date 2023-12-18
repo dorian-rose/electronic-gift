@@ -1,6 +1,6 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getEntries } from "../../store/slice/entrySlice/thunk";
 import { gifts } from "../../helpers/gifts";
@@ -11,11 +11,11 @@ export const CreateEditForm = ({ close, gift, setID }) => {
   const [isLoading, setIsloading] = useState(false);
   const { create, update, obtain } = gifts();
   const navigate = useNavigate();
-  const uid = "12345abcde";
 
-  //collect data from state - used to track progress
-  //const { ok, isLoading, error } = useSelector((state) => state.products);
+  //collect user id
+  const { uid } = useSelector((state) => state.user);
 
+  
   //react hook form
   const {
     register,
