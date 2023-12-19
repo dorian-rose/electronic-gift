@@ -22,7 +22,7 @@ export const AppRouter = () => {
         // dispatch(setUser({ displayName, uid, email, photoURL }));
       } else {
         setIsAuthenticated(false);
-        //dispatch(setUser({}));
+        dispatch(setUser({ uid: null }));
       }
     });
   }, [auth]);

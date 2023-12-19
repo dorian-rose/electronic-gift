@@ -6,7 +6,7 @@ import { Slider } from "../../UI/components/Slider";
 
 export const GiftCard = (entry) => {
   return (
-    <article className=" relative justify-center bg-slate-50 mx-4 max-w-xs shadow m-auto mb-3 sm:mb-0">
+    <article className="relative justify-center bg-slate-50 mx-auto sm:mx-4 max-w-xs shadow m-auto mb-6">
       <h2 className="text-center py-2 underline tracking-widest text-2xl text-primary capitalize">
         {entry.title}
       </h2>
