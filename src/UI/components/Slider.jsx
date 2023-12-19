@@ -15,14 +15,17 @@ export const Slider = ({ imagesArray }) => {
   };
 
   const nextSlide = () => {
-    console.log("here");
     if (current === images.length - 1) setCurrent(0);
     else setCurrent(current + 1);
   };
 
   return (
     <article className="bg-slate-100  py-1 relative">
-      <div className="overflow-hidden relative m-8 ">
+      <div
+        className={`${
+          location.pathname == "/" && "sm:h-60"
+        } overflow-hidden relative m-8 `}
+      >
         <div
           className="flex transition ease-out duration-40"
           style={{
@@ -32,7 +35,7 @@ export const Slider = ({ imagesArray }) => {
           {images.map((img) => {
             return (
               <img
-                className="rounded-xl border border-primary border-2 self-center max-h-92"
+                className="rounded-xl border border-primary border-2 self-center"
                 key={img}
                 src={img}
                 style={{ objectFit: "cover", width: "100%", height: "100%" }}

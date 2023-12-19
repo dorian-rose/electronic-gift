@@ -19,7 +19,7 @@ export const DashboardPage = () => {
 
   //collect user id
   const { uid } = useSelector((state) => state.user);
- 
+
   //set variables for fetch and fetch url
   const url = `${import.meta.env.VITE_URL}/user/${uid}`;
   const method = "GET";
@@ -34,7 +34,13 @@ export const DashboardPage = () => {
   }, []);
 
   return (
-    <div>
+    <section className="absolute top-28  w-full">
+      <h1 className="text-center text-4xl font-bold mb-6 text-primary">
+        Regalos
+      </h1>
+      <h2 className="text-center text-xl mx-4 mb-6 text-primary">
+        Ver y gestionar los regalos que has creado
+      </h2>
       {/* <button
         className="m-auto block w-fit text-primary my-4 text-xl py-1 px-3 shadow-xl rounded-full border"
         onClick={openCloseModal}
@@ -52,7 +58,7 @@ export const DashboardPage = () => {
       {/* {newEntryId && (
         <CreateQR id={newEntryId} setID={setNewEntryId} msg={true} />
       )} */}
-      <section className=" mx-6 my-3 sm:my-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4">
+      <div className=" mx-6 my-3 sm:my-10 flex flex-col sm:flex-row flex-wrap justify-center">
         {isLoading ? (
           <img
             className="h-20"
@@ -66,7 +72,7 @@ export const DashboardPage = () => {
             {msg}
           </p>
         )}
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };

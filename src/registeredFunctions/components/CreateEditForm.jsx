@@ -95,6 +95,7 @@ export const CreateEditForm = ({ close, gift, setID }) => {
         setID(newId);
       }
       setImages([]);
+      console.log(images, "after reset");
       reset();
       obtain(uid);
 
