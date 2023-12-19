@@ -67,10 +67,10 @@ export const RegisterPage = () => {
           </p>
           <LoginGoogle />
           <p className="mt-10 text-sm text-center text-lines font-thin">
-            Ya tienes una cuenta?{" "}
+            Ya tienes una cuenta?
             <Link
               to="/login"
-              className="font-bold hover:text-secondary hover:underline"
+              className="ms-1 font-bold hover:text-secondary hover:underline"
             >
               Login
             </Link>

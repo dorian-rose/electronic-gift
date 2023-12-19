@@ -56,7 +56,7 @@ export const LoginPage = () => {
             Aún no tienes una cuenta?{" "}
             <Link
               to="/register"
-              className="font-bold hover:text-secondary hover:underline"
+              className="ms-1 font-bold hover:text-secondary hover:underline"
             >
               Regístrate
             </Link>

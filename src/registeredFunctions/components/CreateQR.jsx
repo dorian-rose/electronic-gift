@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import QRCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
@@ -6,26 +7,24 @@ import { useState } from "react";
 
 export const CreateQR = ({ id, setID, msg }) => {
   const [loading, setLoading] = useState(false);
+  const qrCodeRef = useRef(null);
   const navigate = useNavigate();
+
+  //manage qr download
   const downloadQr = () => {
     setLoading(true);
-    const qrCodeElement = document.getElementById("qr-code");
-    html2canvas(qrCodeElement).then((canvas) => {
-      // Convert the canvas to data URL
-      const imageData = canvas.toDataURL("image/png");
-      // Calculate aspect ratio of the QR code
-      const aspectRatio = canvas.width / canvas.height;
-      // Create a new jsPDF instance
+    const qrCodeElement = qrCodeRef.current;
+
+    // Use html2canvas to capture the QR code as an image
+    html2canvas(qrCodeElement, { zIndex: 50 }).then((canvas) => {
+      // Create a new PDF document
       const pdf = new jsPDF();
-      // Calculate the dimensions for the image in the PDF
-      const pdfWidth = 180; // Adjust as needed
-      const pdfHeight = pdfWidth / aspectRatio;
 
       // Add the captured image to the PDF
-      pdf.addImage(imageData, "PNG", 15, 40, pdfWidth, pdfHeight);
-
-      // Download the PDF
-      pdf.save("qr_code.pdf");
+      const imageData = canvas.toDataURL("image/png");
+      pdf.addImage(imageData, "PNG", 10, 10, 50, 50);
+      // Save or download the PDF
+      pdf.save("qrcode.pdf");
     });
     setLoading(false);
   };
@@ -67,9 +66,8 @@ export const CreateQR = ({ id, setID, msg }) => {
           </button>
         </div>
         {loading && <p className="bg-red-500">Descargando PDF...</p>}
-        <div id="qr-code">
+        <div id="qr-code" className="z-50 w-fit m-auto pb-8" ref={qrCodeRef}>
           <QRCode
-            className="m-auto pb-8"
             size={300}
             bgColor="white"
             fgColor="#315b61"
