@@ -24,7 +24,7 @@ export const Slider = ({ imagesArray }) => {
     <article className="bg-slate-100  py-1 relative">
       <div className="overflow-hidden relative m-8 ">
         <div
-          className="flex transition ease-out duration-40  "
+          className="flex transition ease-out duration-40"
           style={{
             transform: `translateX(-${current * 100}%)`,
           }}
@@ -32,9 +32,10 @@ export const Slider = ({ imagesArray }) => {
           {images.map((img) => {
             return (
               <img
-                className="rounded-xl border border-primary border-2"
+                className="rounded-xl border border-primary border-2 self-center max-h-92"
                 key={img}
                 src={img}
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
               />
             );
           })}
