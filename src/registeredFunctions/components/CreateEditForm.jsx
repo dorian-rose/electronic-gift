@@ -1,8 +1,8 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getEntries } from "../../store/slice/entrySlice/thunk";
+import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import { getEntries } from "../../store/slice/entrySlice/thunk";
 import { gifts } from "../../helpers/gifts";
 
 export const CreateEditForm = ({ close, gift, setID }) => {
@@ -11,7 +11,7 @@ export const CreateEditForm = ({ close, gift, setID }) => {
   const [formattedFile, setFormattedFile] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const { create, update, obtain } = gifts();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   //collect user id
   const { uid } = useSelector((state) => state.user);
@@ -21,7 +21,7 @@ export const CreateEditForm = ({ close, gift, setID }) => {
     register,
     handleSubmit,
     reset,
-    control,
+    // control,
     formState: { errors },
   } = useForm();
   // const { fields, append, remove } = useFieldArray({

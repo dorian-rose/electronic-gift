@@ -35,7 +35,7 @@ export const GiftDetailView = (entry) => {
 
   return (
     <>
-      <section className="justify-center bg-tertiary  m-4  pb-20  shadow-2xl">
+      <section className="justify-center bg-tertiary  m-4   shadow-2xl">
         <h1 className="text-center pb-5 pt-10 underline tracking-widest text-2xl text-primary capitalize">
           {entry.title}
         </h1>
@@ -51,8 +51,9 @@ export const GiftDetailView = (entry) => {
           )}
           {/* second grid box */}
           <article className="w-full flex-1 sm:p-4">
-            <div className="bg-slate-50 w-full h-full px-2  pb-5 sm:pb-0">
-              <div className="relative top-1/2 sm:-translate-y-1/2 left-1/2 -translate-x-1/2  bg-white rounded-xl w-fit p-3">
+            <div className="bg-slate-50 flex justify-center  w-full h-full px-2  py-5 sm:pb-0">
+              <div className="self-center bg-white rounded-xl w-fit p-3">
+                {/* <div className="relative top-1/2 translate-y-1/2 sm:-translate-y-1/2 left-1/2 -translate-x-1/2  bg-white rounded-xl w-fit p-3"> */}
                 <p className=" text-center">{entry.message}</p>
               </div>
             </div>
@@ -79,11 +80,11 @@ export const GiftDetailView = (entry) => {
             Esconder PDF
           </button>
         </div>
-        <footer className="   w-full">
+        <footer className="w-full">
           <div
             className={
               location.pathname == `/view/${entry._id}`
-                ? "flex justify-center shadow px-3 py-1  rounded relative left-1/2 -translate-x-1/2"
+                ? "flex justify-center shadow px-3 py-8 rounded relative left-1/2 -translate-x-1/2"
                 : "hidden"
             }
           >
@@ -98,7 +99,7 @@ export const GiftDetailView = (entry) => {
               className="mx-4 text-red-700 text-xl p-1 shadow-xl rounded-full border "
             >
               <MdDelete />
-            </button>{" "}
+            </button>
             <button
               onClick={() => setNewEntryId(entry._id)}
               className="mx-4 text-primary text-xl p-1 shadow-xl rounded-full border "
